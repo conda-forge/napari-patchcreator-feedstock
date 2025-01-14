@@ -6,12 +6,12 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/napari-patchcreator-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/napari-patchcreator-{{ version }}.tar.gz
   sha256: 08fc176d3224430fbe47d2af9664df8b571216402b68e84ca6f30aeedb384ff4
 
 build:
   noarch: python
-  number: 0
+  number: 1
   script: {{ PYTHON }} -m pip install . -vv
   script_env:
     - QT_QPA_PLATFORM=offscreen
@@ -19,12 +19,12 @@ build:
 requirements:
   host:
     - pip
-    - python >=3.8,<3.11
+    - python {{ python_min }}
   run:
     - napari
     - napari-plugin-engine >=0.1.4
     - numpy
-    - python >=3.8,<3.11
+    - python >={{ python_min }},<3.11
 
 test:
   imports:
@@ -34,6 +34,7 @@ test:
     - pip check
   requires:
     - pip
+    - python {{ python_min }}
 
 about:
   home: https://github.com/juglab/napari-patchcreator
